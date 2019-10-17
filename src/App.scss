@@ -1,0 +1,52 @@
+.App {
+  height: 100vh;
+}
+
+/**** Footer Styles *****/
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background-color: #343a40;
+}
+
+
+/**** Container styles *****/
+
+.content-container-fluid {
+  height: calc(100% - 116px);
+}
+
+.dashboard-container-fluid {
+  display: flex;
+  .vehicle-list-container {
+    flex-basis: 50%;
+  }
+  .map-container {
+    flex: 1;
+  } 
+}
+
+
+.login-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #343a40;
+  .login-form-container {
+    background: #ffffff;
+    padding: 2rem;
+    margin: auto;
+  }
+}
+
+.nav-item {
+  .dropdown-menu {
+    left: unset;
+    right: 0;
+  }
+}
