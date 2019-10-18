@@ -1,15 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
-import Login from './components/Login';
-import { Dashboard } from './components/Dashboard';
+import Login from './components/Auth/Login';
+import Dashboard  from './components/Dashboard/Dashboard';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-      
+      <ToastContainer />
     </div>
   );
 }

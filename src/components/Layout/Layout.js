@@ -6,21 +6,27 @@ import {
   NavDropdown
 } from "react-bootstrap";
 import { withRouter } from 'react-router-dom';
+import Avatar from '../Utils/Avatar';
+import user from '../../images/user.svg';
 
 function layout(props) {
+
+ const handleLogout = () => {
+     localStorage.removeItem('loggedIn');
+     props.history.push('/')
+ }   
+
   return (
     <>
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+        <Navbar.Brand href="#home">Vehicle Locator</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          <Nav.Link href="/dashboard" active={props.location.pathname === '/dashboard'}>Dashboard</Nav.Link>
+          {/* <Nav.Link href="#features">Features</Nav.Link>
+          <Nav.Link href="#pricing">Pricing</Nav.Link> */}
         </Nav>
-        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-        
-        <NavDropdown.Divider />
-        <NavDropdown.Item onClick={() => props.history.push('/')}>Sign Out</NavDropdown.Item>
+        <NavDropdown title={ <Avatar size="small" image={user}/>} id="basic-nav-dropdown">
+        <NavDropdown.Item onClick={handleLogout}>Sign Out</NavDropdown.Item>
       </NavDropdown>
         {/* <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />

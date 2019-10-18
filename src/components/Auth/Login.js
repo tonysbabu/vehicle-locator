@@ -6,28 +6,21 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import MUIContainer from '@material-ui/core/Container';
 import { withRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import Copyright from '../Utils/Copyright';
+import Typography from '@material-ui/core/Typography';
 
 
-function Copyright() {
-    return (
-      <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
-          Your Website
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
+
+
+
+
 
 
 const styles = makeStyles(theme => ({
@@ -51,7 +44,7 @@ const styles = makeStyles(theme => ({
   }));
 
 
-function login(props){
+function Login(props){
 
 const [ username, setUsername ] = useState('');
 const [ password, setPassword ] = useState('');    
@@ -60,10 +53,11 @@ const classes = styles();
 
 const handleSignin = () => {
   if(username === 'admin' && password === 'password') {
+      localStorage.setItem('loggedIn', true);
       props.history.push('/dashboard');
   }
   else {
-      console.log("username or password incorrect");
+    toast.error("Username or password is incorrect");  
   }
 }
 
@@ -126,4 +120,4 @@ return (
 </Container>)
 }
 
-export default withRouter(login);
+export default withRouter(Login);

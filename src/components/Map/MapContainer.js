@@ -3,15 +3,19 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
 import  MapDirectionsRenderer  from './MapDirectionsRenderer';
 
 const mapContainer = (props) => {
-  const { locations, currentLocation } = props;
+  const { locations, selectedLocations, currentLocation, handleClearHoveredVehicle, handleMarkerClick, handleMarkerHover } = props;
   return (
-    <GoogleMap defaultZoom={10}
+    <GoogleMap defaultZoom={12}
      defaultCenter={{ lat: currentLocation.latitude, lng: currentLocation.longitude }}>
       {props.isMarkerShown && locations.map((location) => 
-      <Marker position={{ lat: location.latitude, lng: location.longitude}}/>) 
+      <Marker position={{ lat: location.latitude, lng: location.longitude}}
+       onClick={() => handleMarkerClick(location)}
+       onMouseOver={() => handleMarkerHover(location)}
+       onMouseOut={handleClearHoveredVehicle}
+       />) 
       }
-       {locations.length >= 2? <MapDirectionsRenderer
-        places={props.locations}
+       {selectedLocations.length >= 2? <MapDirectionsRenderer
+        places={selectedLocations}
         travelMode={window.google.maps.TravelMode.DRIVING}
       />: null}
     </GoogleMap>

@@ -14,22 +14,35 @@
 }
 
 
-/**** Container styles *****/
+/**** Container styles ****/
 
 .content-container-fluid {
   height: calc(100% - 116px);
 }
 
+/**** Dashboard styles ****/
+
 .dashboard-container-fluid {
   display: flex;
+  height: 100%;
   .vehicle-list-container {
-    flex-basis: 50%;
-  }
+    overflow: auto;
+    padding: 2rem;
+    flex-basis: 40%;
+    .list-group-item {
+      cursor: pointer;
+      &.hovered {
+        background: #85a1bf;
+      }
+    }
+    }
   .map-container {
     flex: 1;
+    height: 100%;
   } 
 }
 
+/**** Login styles ****/
 
 .login-container {
   height: 100%;
@@ -44,7 +57,12 @@
   }
 }
 
+/**** Layout Navbar Styles ****/
+
 .nav-item {
+  .dropdown-toggle::after {
+    display: none;
+  }
   .dropdown-menu {
     left: unset;
     right: 0;

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import Layout from "./Layout";
-import MapContainer from "./MapContainer";
+import Layout from "../Layout/Layout";
+import MapContainer from "../Map/MapContainer";
 import { Container, ListGroup } from "react-bootstrap";
-import { MAP_API_KEY, places } from "../constants";
-import { Vehicles } from "./Vehicles";
+import { MAP_API_KEY, places } from "../../constants";
+import { Vehicles } from "../Vehicles/Vehicles";
+import withAuth from '../Auth/WithAuth';
 
-export const Dashboard = props => {
+const Dashboard = props => {
   const [selectedVehicles, setSelectedVehicles] = useState([]);
-  const [currentLocation, setCurrentLocation] = useState({ latitude: '', longitude: '' });
+  const [hoveredVehicle, setHoveredVehicle] = useState('');
+  const placesPresent = places && places.length > 0;
+  const [currentLocation, setCurrentLocation] = useState({ latitude: placesPresent? places[0].latitude:'', longitude: placesPresent?places[0].longitude:''});
 
    useEffect(() => {
      getLocation();
@@ -31,7 +34,7 @@ export const Dashboard = props => {
     let selectedVehiclesList = [...selectedVehicles];
 
     let index = selectedVehiclesList.findIndex(
-      selectedVehicle => selectedVehicle.name === vehicle.name
+      selectedVehicle => selectedVehicle.id === vehicle.id
     );
 
     console.log("index", index);
@@ -48,6 +51,18 @@ export const Dashboard = props => {
     setSelectedVehicles(selectedVehiclesList);
   };
 
+  const handleMarkerClick = (location) => {
+       addOrRemoveSelectedVehicles(location);
+  }
+
+  const handleMarkerHover = (location) => {
+       setHoveredVehicle(location);
+  }
+
+  const handleClearHoveredVehicle = () => {
+      setHoveredVehicle('');
+ }
+
 
 
 
@@ -60,6 +75,7 @@ export const Dashboard = props => {
               vehicles={places}
               selectedVehicles={selectedVehicles}
               addOrRemoveSelectedVehicles={addOrRemoveSelectedVehicles}
+              hoveredVehicle={hoveredVehicle}
             />
           </ListGroup>
         </div>
@@ -68,13 +84,19 @@ export const Dashboard = props => {
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${MAP_API_KEY}`}
           loadingElement={<div style={{ height: `100%` }} />}
           containerElement={
-            <div className="map-container" style={{ height: `400px` }} />
+            <div className="map-container" style={{ height: `100%` }} />
           }
           mapElement={<div style={{ height: `100%` }} />}
-          locations={selectedVehicles}
+          locations={places}
+          selectedLocations={selectedVehicles}
           currentLocation={currentLocation}
+          handleMarkerClick={handleMarkerClick}
+          handleMarkerHover={handleMarkerHover}
+          handleClearHoveredVehicle={handleClearHoveredVehicle}
         />
       </Container>
     </Layout>
   );
 };
+
+export default withAuth(Dashboard);
